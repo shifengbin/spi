@@ -1,7 +1,7 @@
 import React from 'react';
 import { InfoCard } from '../components/InfoCard';
 import I2cWaveformVisualizer from '../components/I2cWaveformVisualizer';
-import { Cable, CheckCircle2, XCircle, ArrowRight, Activity, ArrowDownRight, ArrowUpRight, Lock, MessageSquare } from 'lucide-react';
+import { Cable, CheckCircle2, XCircle, ArrowRight, Activity, ArrowDownRight, ArrowUpRight, Lock, MessageSquare, Layers, RefreshCw, FastForward } from 'lucide-react';
 
 export const I2cPage: React.FC = () => {
   return (
@@ -192,6 +192,84 @@ export const I2cPage: React.FC = () => {
 
       </section>
 
+      {/* Advanced Operations */}
+      <section id="advanced" className="scroll-mt-24 space-y-6">
+        <div className="flex items-center gap-2">
+            <Layers className="text-slate-700" size={24}/>
+            <h3 className="text-2xl font-bold text-slate-900">进阶操作：连续传输与重复起始</h3>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+            {/* Repeated Start */}
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-200 transition-colors">
+                 <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <div className="p-1.5 bg-indigo-100 text-indigo-600 rounded-lg"><RefreshCw size={18}/></div>
+                    重复起始 (Repeated Start)
+                 </h4>
+                 <div className="space-y-4">
+                     <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-600">
+                        <span className="font-bold text-slate-800 block mb-1">场景：我要读寄存器数据</span>
+                        为了读取传感器特定寄存器（如温度），你需要两个步骤：<br/>
+                        1. <strong>写</strong>：告诉传感器“把指针移到温度寄存器”。<br/>
+                        2. <strong>读</strong>：读取该处的数据。
+                     </div>
+                     <p className="text-sm text-slate-600 leading-relaxed">
+                        如果在第1步后发送停止信号 (Stop)，总线就会被释放，其他主设备可能会趁机插队打断。
+                        <br/><br/>
+                        <strong>解决方案：</strong> 主机在第1步结束后，<strong>不挂断 (不发 Stop)</strong>，直接再次发送一个起始信号 (Start)。这就像在电话里说“稍等，我还有事”，保持通话不中断，直接切换到接收模式。
+                     </p>
+                 </div>
+                 <div className="mt-4 bg-slate-900 p-3 rounded-lg text-xs font-mono text-white border border-slate-800 overflow-x-auto">
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="text-amber-500">S</span>
+                        <span>ADDR(写)</span>
+                        <span>ACK</span>
+                        <span>REG地址</span>
+                        <span>ACK</span>
+                        <span className="text-indigo-400 font-bold border border-indigo-500 px-1 rounded">Sr (再拨号)</span>
+                        <span>ADDR(读)</span>
+                        <span>ACK</span>
+                        <span>数据...</span>
+                        <span className="text-red-500">P</span>
+                    </div>
+                 </div>
+            </div>
+
+            {/* Sequential Transfer */}
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                 <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <div className="p-1.5 bg-emerald-100 text-emerald-600 rounded-lg"><FastForward size={18}/></div>
+                    连续传输 (Sequential Transfer)
+                 </h4>
+                 <div className="space-y-4">
+                     <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-600">
+                        <span className="font-bold text-slate-800 block mb-1">场景：读取大块数据</span>
+                        假设你要读取 EEPROM 中的 1KB 数据，或者读取 XYZ 三轴加速度数据。
+                     </div>
+                     <p className="text-sm text-slate-600 leading-relaxed">
+                        不需要每次只读一个字节。你只需要告诉从机<strong>起始地址</strong>。
+                        <br/><br/>
+                        <strong>自动翻页原理：</strong> 从机内部有一个地址指针。每传输一个字节，指针自动 +1。主机只要不断发送应答 (ACK)，从机就会像流水线一样源源不断地吐出后续数据，直到主机喊停 (NACK + Stop)。
+                     </p>
+                 </div>
+                 <div className="mt-4 bg-slate-900 p-3 rounded-lg text-xs font-mono text-white border border-slate-800 overflow-x-auto">
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="text-amber-500">S</span>
+                        <span>ADDR+W</span>
+                        <span>ACK</span>
+                        <span>起始位置</span>
+                        <span>ACK</span>
+                        <span className="text-emerald-400 font-bold border border-emerald-500 px-1 rounded">数据1</span>
+                        <span>ACK(继续)</span>
+                        <span className="text-emerald-400 font-bold border border-emerald-500 px-1 rounded">数据2</span>
+                        <span>ACK(继续)...</span>
+                        <span className="text-red-500">P</span>
+                    </div>
+                 </div>
+            </div>
+        </div>
+      </section>
+
       {/* Pros & Cons */}
       <section id="pros-cons" className="scroll-mt-24 grid md:grid-cols-2 gap-6">
             <InfoCard title="优点" icon={<CheckCircle2 className="text-emerald-500" />} colorClass="bg-emerald-50/50 border-emerald-100">
@@ -221,5 +299,6 @@ export const i2cNavItems = [
     { id: 'intro', label: '协议简介' },
     { id: 'wiring', label: '硬件接线' },
     { id: 'protocol', label: '时序仿真' },
+    { id: 'advanced', label: '进阶操作' },
     { id: 'pros-cons', label: '优缺点' },
 ];

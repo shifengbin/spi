@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { List, Activity, Share2, ArrowRightLeft } from 'lucide-react';
+import { List, Activity, Share2, ArrowRightLeft, HardDriveDownload } from 'lucide-react';
 
 interface SidebarProps {
   activeSection: string;
@@ -11,19 +11,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, pageNavItems })
   return (
     <div className="sticky top-24 space-y-8">
       
-      {/* Protocol Switcher */}
-      <div className="space-y-3">
-         <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-3">协议选择</h4>
+      {/* Category: Communication Protocols */}
+      <div className="space-y-2">
+         <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-3">通信协议</h4>
          <NavLink 
-            to="/" 
+            to="/uart" 
             className={({ isActive }) => 
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                isActive ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
                 }`
             }
          >
-            <Activity size={18} />
-            <span>SPI 协议</span>
+            <ArrowRightLeft size={18} />
+            <span>UART 协议</span>
          </NavLink>
          <NavLink 
             to="/i2c" 
@@ -37,15 +37,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, pageNavItems })
             <span>I2C (IIC) 协议</span>
          </NavLink>
          <NavLink 
-            to="/uart" 
+            to="/" 
             className={({ isActive }) => 
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                isActive ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
                 }`
             }
          >
-            <ArrowRightLeft size={18} />
-            <span>UART 协议</span>
+            <Activity size={18} />
+            <span>SPI 协议</span>
+         </NavLink>
+      </div>
+
+      {/* Category: Embedded Basics */}
+      <div className="space-y-2">
+         <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-3">嵌入式基础</h4>
+         <NavLink 
+            to="/flashing" 
+            className={({ isActive }) => 
+                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isActive ? 'bg-slate-700 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                }`
+            }
+         >
+            <HardDriveDownload size={18} />
+            <span>MCU 烧录原理</span>
          </NavLink>
       </div>
 

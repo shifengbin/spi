@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { SpiPage, spiNavItems } from './pages/SpiPage';
 import { I2cPage, i2cNavItems } from './pages/I2cPage';
 import { UARTPage, uartNavItems } from './pages/UARTPage';
+import { FlashingPage, flashingNavItems } from './pages/FlashingPage';
 import { Activity, Cpu } from 'lucide-react';
 
 // Wrapper component to handle location-based logic (scroll spy)
@@ -15,6 +16,7 @@ const ContentLayout: React.FC = () => {
   let currentNavItems = spiNavItems;
   if (location.pathname === '/i2c') currentNavItems = i2cNavItems;
   else if (location.pathname === '/uart') currentNavItems = uartNavItems;
+  else if (location.pathname === '/flashing') currentNavItems = flashingNavItems;
 
   useEffect(() => {
     // Reset active section on page change
@@ -58,6 +60,7 @@ const ContentLayout: React.FC = () => {
             <Route path="/" element={<SpiPage />} />
             <Route path="/i2c" element={<I2cPage />} />
             <Route path="/uart" element={<UARTPage />} />
+            <Route path="/flashing" element={<FlashingPage />} />
           </Routes>
         </main>
 
