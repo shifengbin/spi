@@ -5,6 +5,12 @@ import { SpiPage, spiNavItems } from './pages/SpiPage';
 import { I2cPage, i2cNavItems } from './pages/I2cPage';
 import { UARTPage, uartNavItems } from './pages/UARTPage';
 import { FlashingPage, flashingNavItems } from './pages/FlashingPage';
+import { FreeRTOSPage, freeRtosNavItems } from './pages/FreeRTOSPage';
+import { FreeRTOSTaskPage, freeRtosTaskNavItems } from './pages/FreeRTOSTaskPage';
+import { FreeRTOSIPCPage, freeRtosIpcNavItems } from './pages/FreeRTOSIPCPage';
+import { FreeRTOSAdvancedPage, freeRtosAdvancedNavItems } from './pages/FreeRTOSAdvancedPage';
+import { RTThreadPage, rtThreadNavItems } from './pages/RTThreadPage';
+import { RTThreadIPCPage, rtThreadIPCNavItems } from './pages/RTThreadIPCPage';
 import { Activity, Cpu } from 'lucide-react';
 
 // Wrapper component to handle location-based logic (scroll spy)
@@ -17,6 +23,12 @@ const ContentLayout: React.FC = () => {
   if (location.pathname === '/i2c') currentNavItems = i2cNavItems;
   else if (location.pathname === '/uart') currentNavItems = uartNavItems;
   else if (location.pathname === '/flashing') currentNavItems = flashingNavItems;
+  else if (location.pathname === '/freertos') currentNavItems = freeRtosNavItems;
+  else if (location.pathname === '/freertos-tasks') currentNavItems = freeRtosTaskNavItems;
+  else if (location.pathname === '/freertos-ipc') currentNavItems = freeRtosIpcNavItems;
+  else if (location.pathname === '/freertos-advanced') currentNavItems = freeRtosAdvancedNavItems;
+  else if (location.pathname === '/rtthread') currentNavItems = rtThreadNavItems;
+  else if (location.pathname === '/rtthread-ipc') currentNavItems = rtThreadIPCNavItems;
 
   useEffect(() => {
     // Reset active section on page change
@@ -61,6 +73,12 @@ const ContentLayout: React.FC = () => {
             <Route path="/i2c" element={<I2cPage />} />
             <Route path="/uart" element={<UARTPage />} />
             <Route path="/flashing" element={<FlashingPage />} />
+            <Route path="/freertos" element={<FreeRTOSPage />} />
+            <Route path="/freertos-tasks" element={<FreeRTOSTaskPage />} />
+            <Route path="/freertos-ipc" element={<FreeRTOSIPCPage />} />
+            <Route path="/freertos-advanced" element={<FreeRTOSAdvancedPage />} />
+            <Route path="/rtthread" element={<RTThreadPage />} />
+            <Route path="/rtthread-ipc" element={<RTThreadIPCPage />} />
           </Routes>
         </main>
 
