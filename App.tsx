@@ -15,6 +15,7 @@ import { DiodePage, diodeNavItems } from './pages/DiodePage';
 import { TransistorPage, transistorNavItems } from './pages/TransistorPage';
 import { MosfetPage, mosfetNavItems } from './pages/MosfetPage';
 import { LogicGatesPage, logicGatesNavItems } from './pages/LogicGatesPage';
+import { MosLogicGatesPage, mosLogicGatesNavItems } from './pages/MosLogicGatesPage';
 import { Activity, Cpu } from 'lucide-react';
 
 const ContentLayout: React.FC = () => {
@@ -35,6 +36,7 @@ const ContentLayout: React.FC = () => {
   else if (location.pathname === '/transistor') currentNavItems = transistorNavItems;
   else if (location.pathname === '/mosfet') currentNavItems = mosfetNavItems;
   else if (location.pathname === '/logic-gates') currentNavItems = logicGatesNavItems;
+  else if (location.pathname === '/mos-logic-gates') currentNavItems = mosLogicGatesNavItems;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -77,6 +79,7 @@ const ContentLayout: React.FC = () => {
             <Route path="/transistor" element={<TransistorPage />} />
             <Route path="/mosfet" element={<MosfetPage />} />
             <Route path="/logic-gates" element={<LogicGatesPage />} />
+            <Route path="/mos-logic-gates" element={<MosLogicGatesPage />} />
           </Routes>
         </main>
       </div>

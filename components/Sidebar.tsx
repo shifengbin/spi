@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { List, Activity, Share2, ArrowRightLeft, HardDriveDownload, Layers, Box, Cpu, Zap, Terminal, CircleDot, Database, Binary } from 'lucide-react';
+import { List, Activity, Share2, ArrowRightLeft, HardDriveDownload, Layers, Box, Cpu, Zap, Terminal, CircleDot, Database, Binary, Shapes } from 'lucide-react';
 
 interface SidebarProps {
   activeSection: string;
@@ -37,6 +37,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, pageNavItems })
             <span>三极管 (BJT)</span>
          </NavLink>
          <NavLink 
+            to="/mosfet" 
+            className={({ isActive }) => 
+                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isActive ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                }`
+            }
+         >
+            <Zap size={18} />
+            <span>MOS管 (MOSFET)</span>
+         </NavLink>
+         <NavLink 
             to="/logic-gates" 
             className={({ isActive }) => 
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -48,15 +59,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, pageNavItems })
             <span>三极管逻辑门 (RTL)</span>
          </NavLink>
          <NavLink 
-            to="/mosfet" 
+            to="/mos-logic-gates" 
             className={({ isActive }) => 
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                isActive ? 'bg-indigo-700 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
                 }`
             }
          >
-            <Zap size={18} />
-            <span>MOS管 (MOSFET)</span>
+            <Shapes size={18} />
+            <span>MOS逻辑门 (CMOS)</span>
          </NavLink>
       </div>
 
